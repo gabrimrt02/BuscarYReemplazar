@@ -11,8 +11,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -42,7 +42,7 @@ public class BuscarYReemplazar extends Application {
     private CheckBox resaltarCheckBox;
 
     // Paneles necesarios para la interfaz
-    private FlowPane checkBoxPanel;
+    private GridPane checkBoxPanel;
     private VBox botonesPanel;
     private GridPane principalPanel;
     private BorderPane root;
@@ -55,6 +55,10 @@ public class BuscarYReemplazar extends Application {
         buscarLabel = new Label("Buscar: ");
         reemplazarConLabel = new Label("Reemplazar con: ");
 
+        // Insatanciamos los cuadros de texto de la busqueda y el reemplazo
+        buscarText = new TextField();
+        reemplazarConText = new TextField();
+
         // Instanciamos los botones para añadirlos al VBox
         buscarButton = new Button("Buscar");
         reemplazarButton = new Button("Reemplazar");
@@ -64,6 +68,8 @@ public class BuscarYReemplazar extends Application {
 
         botonesPanel = new VBox(5, buscarButton, reemplazarButton, reemplazarTodoButton, cerrarButton, ayudaButton);
         botonesPanel.setAlignment(Pos.TOP_CENTER);
+        botonesPanel.setMinWidth(Control.USE_PREF_SIZE);
+        buscarButton.setMinWidth(reemplazarConLabel.getWidth());
 
         // Creamos el panel de Checkboxes
         mayusculasCheckBox = new CheckBox("Mayúsculas y minúsculas");
@@ -72,8 +78,11 @@ public class BuscarYReemplazar extends Application {
         resaltarCheckBox = new CheckBox("Resaltar resultados");
 
         // TODO CAMBIAR EL FLOWPANE POR UN GRIDPANE
-        checkBoxPanel = new FlowPane();
-        checkBoxPanel.getChildren().addAll(mayusculasCheckBox, expresionCheckBox, buscarCheckBox, resaltarCheckBox);
+        checkBoxPanel = new GridPane();
+        checkBoxPanel.setHgap(5);
+        checkBoxPanel.setVgap(5);
+        checkBoxPanel.addRow(0, mayusculasCheckBox, buscarCheckBox);
+        checkBoxPanel.addRow(1, expresionCheckBox, resaltarCheckBox);
 
         // Creamos el panel principal, donde se realizarán las busquedas
         principalPanel = new GridPane();
@@ -81,16 +90,14 @@ public class BuscarYReemplazar extends Application {
         principalPanel.setHgap(5);        
         principalPanel.setVgap(5);
         principalPanel.setGridLinesVisible(true);
-        principalPanel.addRow(0, buscarLabel, new TextField());
-        principalPanel.addRow(1, reemplazarConLabel, new TextField());
-        principalPanel.addRow(2, new Label(""), checkBoxPanel);
+        principalPanel.addRow(0, buscarLabel, buscarText);
+        principalPanel.addRow(1, reemplazarConLabel, reemplazarConText);
+        principalPanel.addRow(2, new Label(""),checkBoxPanel);
 
         ColumnConstraints [] cols = {
             new ColumnConstraints(),
             new ColumnConstraints()
         };
-
-        cols[0].setMinWidth(Control.USE_PREF_SIZE);
 
         // Creamos la escena, la venta principal y hacemos que se muestren
         root = new BorderPane();
@@ -98,7 +105,7 @@ public class BuscarYReemplazar extends Application {
         root.setCenter(principalPanel);
         
         primaryStage.setTitle("Buscar y Reemplazar");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 600, 200));
         primaryStage.show();
 
     }
