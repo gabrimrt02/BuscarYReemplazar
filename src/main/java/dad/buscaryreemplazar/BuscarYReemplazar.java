@@ -10,9 +10,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -66,10 +64,17 @@ public class BuscarYReemplazar extends Application {
         cerrarButton = new Button("Cerrar");
         ayudaButton = new Button("Ayuda");
 
+        // Añadimos los botones al VBox
         botonesPanel = new VBox(5, buscarButton, reemplazarButton, reemplazarTodoButton, cerrarButton, ayudaButton);
         botonesPanel.setAlignment(Pos.TOP_CENTER);
-        botonesPanel.setMinWidth(Control.USE_PREF_SIZE);
-        buscarButton.setMinWidth(reemplazarConLabel.getWidth());
+        VBox.setMargin(botonesPanel, new Insets(10, 10, 0, 0));
+
+        // Ajustamos el tamaño de los botones para que sean del mismo ancho que el más grande
+        buscarButton.setMaxWidth(Double.MAX_VALUE);
+        reemplazarButton.setMaxWidth(Double.MAX_VALUE);
+        reemplazarTodoButton.setMaxWidth(Double.MAX_VALUE);
+        cerrarButton.setMaxWidth(Double.MAX_VALUE);
+        ayudaButton.setMaxWidth(Double.MAX_VALUE);
 
         // Creamos el panel de Checkboxes
         mayusculasCheckBox = new CheckBox("Mayúsculas y minúsculas");
@@ -86,26 +91,23 @@ public class BuscarYReemplazar extends Application {
 
         // Creamos el panel principal, donde se realizarán las busquedas
         principalPanel = new GridPane();
-        principalPanel.setPadding(new Insets(5));
-        principalPanel.setHgap(5);        
         principalPanel.setVgap(5);
-        principalPanel.setGridLinesVisible(true);
         principalPanel.addRow(0, buscarLabel, buscarText);
         principalPanel.addRow(1, reemplazarConLabel, reemplazarConText);
         principalPanel.addRow(2, new Label(""),checkBoxPanel);
 
-        ColumnConstraints [] cols = {
-            new ColumnConstraints(),
-            new ColumnConstraints()
-        };
+        // Ajustamos el tamaño minimo del panel principal
+        principalPanel.setMinWidth(Control.USE_PREF_SIZE);
 
         // Creamos la escena, la venta principal y hacemos que se muestren
         root = new BorderPane();
         root.setRight(botonesPanel);
         root.setCenter(principalPanel);
+        root.setPadding(new Insets(5));
+        root.setMinWidth(Control.USE_PREF_SIZE);
         
         primaryStage.setTitle("Buscar y Reemplazar");
-        primaryStage.setScene(new Scene(root, 600, 200));
+        primaryStage.setScene(new Scene(root, 500, 200));
         primaryStage.show();
 
     }
