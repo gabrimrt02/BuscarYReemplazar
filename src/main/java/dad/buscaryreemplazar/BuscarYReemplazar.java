@@ -104,7 +104,6 @@ public class BuscarYReemplazar extends Application {
         root.setRight(botonesPanel);
         root.setCenter(principalPanel);
         root.setPadding(new Insets(5));
-        root.setMinWidth(Control.USE_PREF_SIZE);
         
         primaryStage.setTitle("Buscar y Reemplazar");
         primaryStage.setScene(new Scene(root, 500, 200));
