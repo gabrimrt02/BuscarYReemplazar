@@ -82,7 +82,6 @@ public class BuscarYReemplazar extends Application {
         buscarCheckBox = new CheckBox("Buscar hacia atrás");
         resaltarCheckBox = new CheckBox("Resaltar resultados");
 
-        // TODO CAMBIAR EL FLOWPANE POR UN GRIDPANE
         checkBoxPanel = new GridPane();
         checkBoxPanel.setHgap(5);
         checkBoxPanel.setVgap(5);
